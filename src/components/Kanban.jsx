@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function Kanban() {
-  return (
-    <>
-      <div>Kanban</div>
-    </>
-  );
+  const stageNames = ["Backlogs", "Todo", "Ongoing", "Done"];
+
+  const [newTask, setNewTask] = useState("");
+
+  const [stageTasks, setStageTasks] = useState([[], [], [], []]);
+
+  return <div>Kanban</div>;
 }
