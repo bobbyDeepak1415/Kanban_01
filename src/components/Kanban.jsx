@@ -8,7 +8,7 @@ export default function Kanban() {
   const [taskStages, setTaskStages] = useState([[], [], [], []]);
 
   const handleAddTask = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!newTask.trim()) return;
 
     const task = { name: newTask.trim(), stage: 0 };
@@ -24,7 +24,7 @@ export default function Kanban() {
       <div className="form_layout">
         <form onSubmit={handleAddTask}>
           <div className="form">
-            <input
+            <input value={newTask}
               className="form_input"
               onChange={(e) => setNewTask(e.target.value)}
             ></input>
@@ -34,11 +34,11 @@ export default function Kanban() {
       </div>
 
       <div className="containers_layout">
-        {taskStages.map((stage, index) => {
+        {stages.map((stage, index) => {
           return (
-            <div className="container">
+            <div className="container" key={index}>
               <h4>{stage}</h4>
-              <ul>
+              <ul className="task_list">
                 {taskStages[index].map((task, taskIndex) => {
                   return (
                     <li key={taskIndex}>
