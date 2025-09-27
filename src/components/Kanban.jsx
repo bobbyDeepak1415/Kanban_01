@@ -5,9 +5,9 @@ export default function Kanban() {
 
   const stages = ["Backlogs", "Todo", "Ongoing", "Done"];
 
-  const [taskStages, setTaskStages] = useState([[], [], [], []]);
+  const [dragData, setDragdata] = useState(null);
 
-  const [dragData, setDragData] = useState(null);
+  const [taskStages, setTaskStages] = useState([[], [], [], []]);
 
   const handleAddTask = (e) => {
     e.preventDefault();
@@ -39,25 +39,26 @@ export default function Kanban() {
   };
 
   const handleDragStart = (stageIndex, taskIndex) => {
-    setDragData({ stageIndex, taskIndex });
+    setDragdata({ stageIndex, taskIndex });
   };
 
-  const handleDrop=(stageIndex)=>{
+  const handleDrop = (stageIndex) => {
+    if (!dragData) return;
 
-    const {stageIndex:fromStage,taskIndex}=dragData
+    const { stageIndex: fromStage, taskIndex } = dragData;
 
-    const updatedStages=[...taskStages]
+    if(fromStage===stageIndex) return
 
+    const updatedStages = structuredClone(taskStages);
 
-    const [movedTask]=updatedStages[fromStage].splice(taskIndex,1)
+    const [movedTask] = updatedStages[fromStage].splice(taskIndex, 1);
 
-    updatedStages[stageIndex].push(movedTask)
+    updatedStages[stageIndex].push(movedTask);
 
-    setTaskStages(updatedStages)
+    setTaskStages(updatedStages);
 
-    setDragData(null)
-
-  }
+    setDragdata(null);
+  };
 
   const allowDrop=(e)=>{
     e.preventDefault()
@@ -84,10 +85,10 @@ export default function Kanban() {
         {stages.map((stage, stageIndex) => {
           return (
             <div
-            onDrop={()=>handleDrop(stageIndex)}
-            onDragOver={allowDrop}
               className="justify-center border-2 h-[70vh] w-[20vw] m-3"
               key={stageIndex}
+              onDrop={() => handleDrop(stageIndex)}
+              onDragOver={allowDrop}
             >
               <h4 className="text-center font-bold text-lg underline underline-offset-4">
                 {stage}
@@ -99,7 +100,6 @@ export default function Kanban() {
                       draggable
                       onDragStart={() => handleDragStart(stageIndex, taskIndex)}
                       key={taskIndex}
-
                     >
                       <div className="flex justify-center">
                         <span>{task.name}</span>
