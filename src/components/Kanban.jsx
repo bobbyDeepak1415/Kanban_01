@@ -9,6 +9,7 @@ export default function Kanban() {
 
   const [dragData, setDragData] = useState(null);
 
+
   const handleAddTask = (e) => {
     e.preventDefault();
     if (!newTask.trim()) return;
@@ -37,6 +38,36 @@ export default function Kanban() {
     setTaskStages(updatedStages);
   };
 
+  const handleDragStart=(stageIndex,taskIndex)=>{
+setDragData({stageIndex,taskIndex})
+
+  }
+
+  const allowDrop=(e)=>{
+    e.preventDefault()
+  }
+
+  const handleDrop=(stageIndex)=>{
+
+    if(!dragData) return
+
+    const updatedStages=structuredClone(taskStages)
+
+    const {stageIndex:fromStage,taskIndex}=dragData
+
+    if(fromStage===stageIndex) return
+
+    const [movedTask]=updatedStages[fromStage].splice(taskIndex,1)
+
+    updatedStages[stageIndex].push(movedTask)
+
+    setTaskStages(updatedStages)
+
+    setDragData(null)
+
+
+  }
+
   return (
     <div className="bg-slate-400 h-[100vh]">
       <div className="form_layout">
@@ -59,14 +90,18 @@ export default function Kanban() {
         {stages.map((stage, stageIndex) => {
           return (
             <div
+            onDragOver={allowDrop}
+            onDrop={()=>handleDrop(stageIndex)}
               key={stageIndex}
               className="border-2 gap-2 h-[70vh] w-[20vw] m-3"
+
             >
               <h4 className="text-center text-2xl underline mb-2">{stage}</h4>
               <ul>
                 {taskStages[stageIndex].map((task, taskIndex) => {
                   return (
-                    <li key={taskIndex}>
+                    <li draggable key={taskIndex}
+                     onDragStart={()=>handleDragStart(stageIndex,taskIndex)}>
                       <div className="flex justify-center">
                         <span className="mr-2 text-lg">{task.name}</span>
                         <span className="flex justify-center">
@@ -95,7 +130,7 @@ export default function Kanban() {
           );
         })}
       </div>
-      KANBan
+    
     </div>
   );
 }
