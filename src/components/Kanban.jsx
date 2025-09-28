@@ -19,6 +19,19 @@ e.preventDefault()
     setNewTask("");
   };
 
+  const moveTask=(stageIndex,taskIndex,direction)=>{
+
+
+    const updatedStages=[...taskStages]
+
+    const taskToMove=updatedStages[stageIndex][taskIndex]
+    updatedStages[stageIndex].splice(taskIndex,1)
+    updatedStages[stageIndex+direction].push(taskToMove)
+    setTaskStages(updatedStages)
+
+
+  }
+
   return (
     <div className="bg-slate-400 h-[100vh]">
       <div className="form_layout">
@@ -32,20 +45,33 @@ e.preventDefault()
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
           ></input>
-          <button className="bg-slate-500 p-1 rounded-sm m-1 hover:scale-110 ease-in-out duration-150 transform transition-transform">Add Task</button>
+          <button className="bg-slate-500 p-1 rounded-sm m-1 hover:scale-110 ease-in-out duration-150">Add Task</button>
         </form>
       </div>
       <div className="flex gap-2 justify-center items-center mt-4">
         {stages.map((stage, stageIndex) => {
           return (
             <div key={stageIndex} className="border-2 gap-2 h-[70vh] w-[20vw] m-3">
-              <h4 className="text-center text-2xl underline">{stage}</h4>
+              <h4 className="text-center text-2xl underline mb-2">{stage}</h4>
               <ul>
                 {taskStages[stageIndex].map((task, taskIndex) => {
                   return (
                     <li key={taskIndex}>
-                      <div>
-                        <span>{task.name}</span>
+                      <div className="flex justify-center">
+                        <span className="mr-2 text-lg">{task.name}</span>
+                        <span className="flex justify-center">
+                          <button
+                            onClick={() => moveTask(stageIndex, taskIndex,-1)}
+                          >
+                            ⬅️
+                          </button>
+                          <button
+                            onClick={() => moveTask(stageIndex, taskIndex,1)}
+                          >
+                            ➡️
+                          </button>
+                          <button>❌</button>
+                        </span>
                       </div>
                     </li>
                   );
