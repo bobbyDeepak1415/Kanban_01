@@ -7,8 +7,10 @@ export default function Kanban() {
 
   const [taskStages, setTaskStages] = useState([[], [], [], []]);
 
+  const [dragData, setDragData] = useState(null);
+
   const handleAddTask = (e) => {
-e.preventDefault()
+    e.preventDefault();
     if (!newTask.trim()) return;
 
     const task = { name: newTask.trim(), stage: 0 };
@@ -19,18 +21,21 @@ e.preventDefault()
     setNewTask("");
   };
 
-  const moveTask=(stageIndex,taskIndex,direction)=>{
+  const moveTask = (stageIndex, taskIndex, direction) => {
+    const updatedStages = [...taskStages];
 
+    const taskToMove = updatedStages[stageIndex][taskIndex];
+    updatedStages[stageIndex].splice(taskIndex, 1);
+    updatedStages[stageIndex + direction].push(taskToMove);
+    setTaskStages(updatedStages);
+  };
 
-    const updatedStages=[...taskStages]
+  const handleDelete = (stageIndex, taskIndex) => {
+    const updatedStages = structuredClone(taskStages);
 
-    const taskToMove=updatedStages[stageIndex][taskIndex]
-    updatedStages[stageIndex].splice(taskIndex,1)
-    updatedStages[stageIndex+direction].push(taskToMove)
-    setTaskStages(updatedStages)
-
-
-  }
+    updatedStages[stageIndex].splice(taskIndex, 1);
+    setTaskStages(updatedStages);
+  };
 
   return (
     <div className="bg-slate-400 h-[100vh]">
@@ -45,13 +50,18 @@ e.preventDefault()
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
           ></input>
-          <button className="bg-slate-500 p-1 rounded-sm m-1 hover:scale-110 ease-in-out duration-150">Add Task</button>
+          <button className="bg-slate-500 p-1 rounded-sm m-1 hover:scale-110 ease-in-out duration-150">
+            Add Task
+          </button>
         </form>
       </div>
       <div className="flex gap-2 justify-center items-center mt-4">
         {stages.map((stage, stageIndex) => {
           return (
-            <div key={stageIndex} className="border-2 gap-2 h-[70vh] w-[20vw] m-3">
+            <div
+              key={stageIndex}
+              className="border-2 gap-2 h-[70vh] w-[20vw] m-3"
+            >
               <h4 className="text-center text-2xl underline mb-2">{stage}</h4>
               <ul>
                 {taskStages[stageIndex].map((task, taskIndex) => {
@@ -61,16 +71,20 @@ e.preventDefault()
                         <span className="mr-2 text-lg">{task.name}</span>
                         <span className="flex justify-center">
                           <button
-                            onClick={() => moveTask(stageIndex, taskIndex,-1)}
+                            onClick={() => moveTask(stageIndex, taskIndex, -1)}
                           >
                             ⬅️
                           </button>
                           <button
-                            onClick={() => moveTask(stageIndex, taskIndex,1)}
+                            onClick={() => moveTask(stageIndex, taskIndex, 1)}
                           >
                             ➡️
                           </button>
-                          <button>❌</button>
+                          <button
+                            onClick={() => handleDelete(stageIndex, taskIndex)}
+                          >
+                            ❌
+                          </button>
                         </span>
                       </div>
                     </li>
@@ -81,7 +95,6 @@ e.preventDefault()
           );
         })}
       </div>
-    
     </div>
   );
 }
