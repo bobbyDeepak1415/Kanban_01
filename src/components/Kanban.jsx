@@ -95,6 +95,7 @@ export default function Kanban() {
           );
         })}
       </div>
+      KANBan
     </div>
   );
 }
