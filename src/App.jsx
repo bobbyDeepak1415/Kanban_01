@@ -1,6 +1,6 @@
 import "./App.css";
 import Demo from "./components/demo";
-import Kanban from "./components/Kanban";
+// import Kanban from "./components/Kanban";
 
 function App() {
   return (
