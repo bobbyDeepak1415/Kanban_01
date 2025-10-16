@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 export default function Kanban() {
   const [newTask, setNewTask] = useState("");
 
   const stages = ["Backlogs", "Todo", "Ongoing", "Done"];
 
-  // const [taskStages, setTaskStages] = useState([[], [], [], []]);
+  const [taskStages, setTaskStages] = useState([[], [], [], []]);
 
-    const [taskStages, setTaskStages] = useState(()=>{
-      try{
-        const localSaved=localStorage.getItem("kanban-tasks")
+  //   const [taskStages, setTaskStages] = useState(()=>{
+  //     try{
+  //       const localSaved=localStorage.getItem("kanban-tasks")
 
-        return localSaved ? JSON.parse(localSaved) :[]
-      }catch{
-        console.log("failed fetching data")
-        return []
-      }
-    });
+  //       return localSaved ? JSON.parse(localSaved) :[]
+  //     }catch{
+  //       console.log("failed fetching data")
+  //       return []
+  //     }
+  //   });
 
-    useEffect(()=>{
-  try{
-    localStorage.setItem("kanban-tasks",JSON.stringify(taskStages))
-  }catch{
-    console.log("failed fetching data")
-    return []
-  }
-    },[taskStages])
+  //   useEffect(()=>{
+  // try{
+  //   localStorage.setItem("kanban-tasks",JSON.stringify(taskStages))
+  // }catch{
+  //   console.log("failed fetching data")
+  //   return []
+  // }
+  //   },[taskStages])
 
   const [dragData, setDragData] = useState(null);
 
