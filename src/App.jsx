@@ -5,7 +5,8 @@ import Kanban from "./components/Kanban";
 function App() {
   return (
     <div >
-      <Kanban/>
+      {/* <Kanban/> */}
+      <Demo/>
     </div>
   );
 }
