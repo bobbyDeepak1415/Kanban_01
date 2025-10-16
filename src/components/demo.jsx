@@ -1,19 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-const demo = () => {
+const Demo = () => {
 
     const [firstName,setFirstName]=useState("")
     const [secondName,setSecondName]=useState("")
 
 
-    const fullName=()=>{
 
+    useEffect(()=>{
+        fullName()
+
+    },[])
+
+    const fullName=()=>{
+const fName=firstName+""+secondName
     }
 
   return (
     <div>
       <input
-        onChange={(e) => setSecondName(e.target.value)}
+        onChange={(e) => setFirstName(e.target.value)}
         value={firstName}
       ></input>
       <input
@@ -25,4 +31,4 @@ const demo = () => {
   );
 }
 
-export default demo
+export default Demo
