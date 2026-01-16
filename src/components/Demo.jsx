@@ -3,23 +3,22 @@ import React, { useEffect, useRef, useState } from "react";
 const Demo = () => {
   const [currentStatus, setCurrentStatus] = useState("");
 
-  const currentIndex = useRef(0);
+  const indexRef = useRef(0);
 
   const statusArr = ["online", "offline", "unKnown", "loggedOut"];
 
   useEffect(() => {
-    const intervalIndex = setInterval(() => {
-      setCurrentStatus(statusArr[currentIndex.current]);
-
-      currentIndex.current = (currentIndex.current + 1) % statusArr.length;
+    const intervalRef = setInterval(() => {
+      setCurrentStatus(statusArr[indexRef.current]);
+      indexRef.current = (indexRef.current + 1) % statusArr.length;
     }, 1200);
-    return () => clearInterval(intervalIndex);
+
+    return () => clearInterval(intervalRef);
   }, []);
 
   return (
     <div>
-      <h1>jello</h1>
-
+      <h1>Hello</h1>
       <p>{currentStatus}</p>
     </div>
   );
