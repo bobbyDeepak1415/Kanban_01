@@ -8,13 +8,12 @@ const Demo = () => {
   const statusArr = ["online", "offline", "unKnown", "loggedOut"];
 
   useEffect(() => {
-    let intervalIndex = setInterval(() => {
-      setCurrentStatus(statusArr[currentIndex]);
+    const intervalIndex = setInterval(() => {
+      setCurrentStatus(statusArr[currentIndex.current]);
 
       currentIndex.current = (currentIndex.current + 1) % statusArr.length;
-
-      return () => clearInterval(intervalIndex);
     }, 1200);
+    return () => clearInterval(intervalIndex);
   }, []);
 
   return (
