@@ -26,4 +26,22 @@ let months = {
 
 let days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
-console.log(days)
+console.log(days);
+
+function display(month, day) {
+  let totalDays = 0;
+
+  for (let m in months) {
+    if (m === month) break;
+    totalDays += months[m];
+  }
+
+  let refIndex = 1;
+  totalDays += day - 1;
+
+  let dayIndex = (refIndex + totalDays) % 7;
+
+  return days[dayIndex];
+}
+
+// console.log(display("Jul",12))
