@@ -9,8 +9,8 @@ const Demo = () => {
 
   return (
     <div>
-      <div className="flex flex-col">
-        <form className="self-center">
+      <div className="flex justify-center">
+        <form>
           <input></input>
           <button>Add Item</button>
         </form>
