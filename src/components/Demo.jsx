@@ -7,7 +7,7 @@ const Demo = () => {
 
   const [taskStages, setTaskStages] = useState([[], [], [], []]);
 
-  const [dragData,setDragData]=useState("")
+  const [dragData, setDragData] = useState("");
 
   const handleAddTask = (e) => {
     e.preventDefault();
@@ -40,25 +40,21 @@ const Demo = () => {
     setTaskStages(updatedStages);
   };
 
-  const handleDrop=(stageIndex)=>{
+  const handleDrop = (stageIndex) => {
+    if (!dragData) return;
 
-    if(!dragData) return 
+    const { stageIndex: fromStage, taskIndex } = dragData;
 
-    const {stageIndex:fromStage,taskIndex}=dragData
+    const updatedStages = structuredClone(taskStages);
 
-    const updatedStages=structuredClone(taskStages)
+    if (fromStage === stageIndex) return;
 
-    if(fromStage===stageIndex) return
+    const [movedTask] = updatedStages[fromStage].splice(taskIndex, 1);
 
-    const [movedTask]=updatedStages[fromStage].splice(taskIndex,1)
-
-    updatedStages[stageIndex].push(movedTask)
-    setTaskStages(updatedStages)
-    setDragData(null)
-
-
-
-  }
+    updatedStages[stageIndex].push(movedTask);
+    setTaskStages(updatedStages);
+    setDragData(null);
+  };
 
   return (
     <div className="bg-teal-300 h-[100vh]">
@@ -78,9 +74,9 @@ const Demo = () => {
         {stages.map((stage, stageIndex) => {
           return (
             <div
-
-            onDrop={()=>handleDrop(stageIndex)}
-
+            onDragOver={(e)=>e.preventDefault()}
+            
+              onDrop={() => handleDrop(stageIndex)}
               className="bg-slate-500 border-black border-2 margin-auto m-auto h-[70vh] w-[20vw] flex flex-col"
               key={stageIndex}
             >
@@ -91,7 +87,11 @@ const Demo = () => {
               <ul>
                 {taskStages[stageIndex].map((task, taskIndex) => {
                   return (
-                    <li draggable key={taskIndex}>
+                    <li
+                      onDragStart={() => setDragData({stageIndex,taskIndex})}
+                      draggable
+                      key={taskIndex}
+                    >
                       <div className="flex justify-center gap-2 text-lg">
                         <span>{task.name}</span>
                         <span>
