@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 const Demo = () => {
   const [newTask, setNewTask] = useState("");
@@ -8,17 +8,18 @@ const Demo = () => {
   const [taskStages, setTaskStages] = useState([[], [], [], []]);
 
   const handleAddTask = (e) => {
-    e.preventDefault();
+    e.preventDefult();
 
     if (!newTask.trim()) return;
 
     const task = { name: newTask.trim(), stage: 0 };
 
-    const updatedStages = taskStages.map((arr) => [...arr]);
+    const updatedStages = taskStages.map((taskStage) => [...taskStage]);
 
     updatedStages[0].push(task);
 
     setTaskStages(updatedStages);
+
     setNewTask("");
   };
 
@@ -46,13 +47,17 @@ const Demo = () => {
               </h1>
 
               <ul>
-                {taskStages[stageIndex].map((task, id) => {
+                {taskStages[stageIndex].map((task, taskIndex) => {
                   return (
-                    <li className="m-auto" key={id}>
-                      {task.name}
-                      <button>⬅️</button>
-                      <button>➡️</button>
-                      <button>❌</button>
+                    <li key={taskIndex}>
+                      <div className="flex justify-center gap-2 text-lg">
+                        <span>{task.name}</span>
+                        <span>
+                          <button>⬅️</button>
+                          <button>➡️</button>
+                          <button>❌</button>
+                        </span>
+                      </div>
                     </li>
                   );
                 })}
