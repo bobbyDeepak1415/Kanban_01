@@ -5,13 +5,31 @@ const Demo = () => {
 
   const stages = ["Backlogs", "Todo", "Ongoing", "Done"];
 
-  const [taskStages, setTaskStages] = useState([[], [], [], []]);.....
+  const [taskStages, setTaskStages] = useState([[], [], [], []]);
+
+  const handleAddTask = (e) => {
+    e.preventDefault();
+
+    if (!newTask.trim()) return;
+
+    const task = { name: newTask.trim(), stage: 0 };
+
+    const updatedStages = taskStages.map((arr) => [...arr]);
+
+    updatedStages[0].push(task);
+
+    setTaskStages(updatedStages);
+    setNewTask("");
+  };
 
   return (
     <div className="bg-teal-300 h-[100vh]">
       <div className="flex justify-center h-[15vh]">
-        <form className="m-auto">
-          <input></input>
+        <form className="m-auto" onSubmit={handleAddTask}>
+          <input
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+          ></input>
           <button className="bg-blue-500">Add Item</button>
         </form>
       </div>
@@ -28,10 +46,10 @@ const Demo = () => {
               </h1>
 
               <ul>
-                {taskStages[stageIndex].map((taskStage, id) => {
+                {taskStages[stageIndex].map((task, id) => {
                   return (
-                    <li key={id}>
-                      {taskStage}
+                    <li className="m-auto" key={id}>
+                      {task.name}
                       <button>⬅️</button>
                       <button>➡️</button>
                       <button>❌</button>
