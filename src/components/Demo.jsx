@@ -9,34 +9,31 @@ const Demo = () => {
 
   const handleAddTask = (e) => {
     e.preventDefault();
-
     if (!newTask.trim()) return;
-
-    const task = { name: newTask.trim(), stage: 0 };
 
     const updatedStages = taskStages.map((taskStage) => [...taskStage]);
 
-    updatedStages[0].push(task);
+    const task = { name: newTask.trim(), stage: 0 };
 
+    updatedStages[0].push(task);
     setTaskStages(updatedStages);
 
     setNewTask("");
   };
 
   const handleDelete = (stageIndex, taskIndex) => {
-    const updatedStages = structuredClone(taskStages);
+    const updatedStages = taskStages.map((taskStage) => [...taskStage]);
 
     updatedStages[stageIndex].splice(taskIndex, 1);
     setTaskStages(updatedStages);
   };
 
   const moveTask = (stageIndex, taskIndex, direction) => {
-    const updatedStages = structuredClone(taskStages);
-
+    const updatedStages = taskStages.map((taskStage) => [...taskStage]);
     const taskToMove = updatedStages[stageIndex][taskIndex];
 
-    updatedStages[stageIndex].splice(taskIndex, 1);
     updatedStages[stageIndex + direction].push(taskToMove);
+    updatedStages[stageIndex].splice(taskIndex, 1);
 
     setTaskStages(updatedStages);
   };
@@ -59,6 +56,9 @@ const Demo = () => {
         {stages.map((stage, stageIndex) => {
           return (
             <div
+
+            onDrop={handleDrop}
+
               className="bg-slate-500 border-black border-2 margin-auto m-auto h-[70vh] w-[20vw] flex flex-col"
               key={stageIndex}
             >
