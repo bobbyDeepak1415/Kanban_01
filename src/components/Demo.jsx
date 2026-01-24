@@ -8,7 +8,7 @@ const Demo = () => {
   const [taskStages, setTaskStages] = useState([[], [], [], []]);
 
   const handleAddTask = (e) => {
-    e.preventDefult();
+    e.preventDefault();
 
     if (!newTask.trim()) return;
 
@@ -23,6 +23,24 @@ const Demo = () => {
     setNewTask("");
   };
 
+  const handleDelete = (stageIndex, taskIndex) => {
+    const updatedStages = structuredClone(taskStages);
+
+    updatedStages[stageIndex].splice(taskIndex, 1);
+    setTaskStages(updatedStages);
+  };
+
+  const moveTask = (stageIndex, taskIndex, direction) => {
+    const updatedStages = structuredClone(taskStages);
+
+    const taskToMove = updatedStages[stageIndex][taskIndex];
+
+    updatedStages[stageIndex].splice(taskIndex, 1);
+    updatedStages[stageIndex + direction].push(taskToMove);
+
+    setTaskStages(updatedStages);
+  };
+
   return (
     <div className="bg-teal-300 h-[100vh]">
       <div className="flex justify-center h-[15vh]">
@@ -31,7 +49,9 @@ const Demo = () => {
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
           ></input>
-          <button className="bg-blue-500">Add Item</button>
+          <button className="bg-blue-500" type="submit">
+            Add Item
+          </button>
         </form>
       </div>
 
@@ -49,13 +69,25 @@ const Demo = () => {
               <ul>
                 {taskStages[stageIndex].map((task, taskIndex) => {
                   return (
-                    <li key={taskIndex}>
+                    <li draggable key={taskIndex}>
                       <div className="flex justify-center gap-2 text-lg">
                         <span>{task.name}</span>
                         <span>
-                          <button>⬅️</button>
-                          <button>➡️</button>
-                          <button>❌</button>
+                          <button
+                            onClick={() => moveTask(stageIndex, taskIndex, -1)}
+                          >
+                            ⬅️
+                          </button>
+                          <button
+                            onClick={() => moveTask(stageIndex, taskIndex, 1)}
+                          >
+                            ➡️
+                          </button>
+                          <button
+                            onClick={() => handleDelete(stageIndex, taskIndex)}
+                          >
+                            ❌
+                          </button>
                         </span>
                       </div>
                     </li>
