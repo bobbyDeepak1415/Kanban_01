@@ -8,7 +8,7 @@ const Demo = () => {
   const [taskStages, setTaskStages] = useState([[], [], [], []]);
 
   return (
-    <div className="bg-teal-300 h-[100vh]"> 
+    <div className="bg-teal-300 h-[100vh]">
       <div className="flex justify-center h-[15vh]">
         <form className="m-auto">
           <input></input>
@@ -20,10 +20,12 @@ const Demo = () => {
         {stages.map((stage, stageIndex) => {
           return (
             <div
-              className="bg-slate-500 border-black border-2 margin-auto m-auto h-[70vh] w-[20vw] flex"
+              className="bg-slate-500 border-black border-2 margin-auto m-auto h-[70vh] w-[20vw] flex flex-col"
               key={stageIndex}
             >
-              <h1 className="mx-auto mt-2 text-lg border-b-2 border-black w-fit" >{stage}</h1>
+              <h1 className="inline-block mx-auto mt-2 text-lg border-b-2 border-black">
+                {stage}
+              </h1>
 
               <ul>
                 {taskStages[stageIndex].map((taskStage, id) => {
