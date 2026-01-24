@@ -7,6 +7,8 @@ const Demo = () => {
 
   const [taskStages, setTaskStages] = useState([[], [], [], []]);
 
+  const [dragData,setDragData]=useState("")
+
   const handleAddTask = (e) => {
     e.preventDefault();
     if (!newTask.trim()) return;
@@ -38,6 +40,26 @@ const Demo = () => {
     setTaskStages(updatedStages);
   };
 
+  const handleDrop=(stageIndex)=>{
+
+    if(!dragData) return 
+
+    const {stageIndex:fromStage,taskIndex}=dragData
+
+    const updatedStages=structuredClone(taskStages)
+
+    if(fromStage===stageIndex) return
+
+    const [movedTask]=updatedStages[fromStage].splice(taskIndex,1)
+
+    updatedStages[stageIndex].push(movedTask)
+    setTaskStages(updatedStages)
+    setDragData(null)
+
+
+
+  }
+
   return (
     <div className="bg-teal-300 h-[100vh]">
       <div className="flex justify-center h-[15vh]">
@@ -57,7 +79,7 @@ const Demo = () => {
           return (
             <div
 
-            onDrop={handleDrop}
+            onDrop={()=>handleDrop(stageIndex)}
 
               className="bg-slate-500 border-black border-2 margin-auto m-auto h-[70vh] w-[20vw] flex flex-col"
               key={stageIndex}
