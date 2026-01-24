@@ -5,7 +5,7 @@ const Demo = () => {
 
   const stages = ["Backlogs", "Todo", "Ongoing", "Done"];
 
-  const [taskStages, setTaskStages] = useState([[], [], [], []]);
+  const [taskStages, setTaskStages] = useState([[], [], [], []]);.....
 
   return (
     <div className="bg-teal-300 h-[100vh]">
