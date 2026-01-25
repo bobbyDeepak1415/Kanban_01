@@ -7,6 +7,8 @@ function Demo() {
 
   const [newTask, setNewTask] = useState("");
 
+  const [dragData,setDragData]=useState(null)
+
   const handleAddTask = (e) => {
     e.preventDefault();
     if (!newTask.trim()) return;
@@ -39,6 +41,10 @@ function Demo() {
         {stages.map((stage, stageIndex) => {
           return (
             <div
+
+            onDrop={()=>handleDrop(stageIndex)}
+
+            onDragOver={(e)=>e.preventDefault}
               className="items-center flex flex-col h-[80vh] border-black border-2 w-[20vw] m-auto"
               key={stageIndex}
             >
@@ -46,7 +52,7 @@ function Demo() {
               <ul>
                 {taskStages[stageIndex].map((task, taskIndex) => {
                   return (
-                    <li key={taskIndex}>
+                    <li className="flex gap-3" draggable onDragStart={()=>setDragData({stageIndex,taskIndex})} key={taskIndex}>
                       <span>{task.name}</span>
                       <span>
                         <button>⬅️</button>
