@@ -1,71 +1,51 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-const Demo = () => {
-  const [newTask, setNewTask] = useState("");
-
+function Demo() {
   const stages = ["Backlogs", "Todo", "Ongoing", "Done"];
 
   const [taskStages, setTaskStages] = useState([[], [], [], []]);
 
+  const [newTask, setNewTask] = useState("");
+
+  const handleAddTask=()=>{
+    
+  }
+
   return (
-    <div className="bg-teal-300 h-[100vh]">
-      <div className="flex justify-center h-[15vh]">
-        <form className="m-auto" onSubmit={handleAddTask}>
-          <input
-            value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
-          ></input>
-          <button className="bg-blue-500" type="submit">
-            Add Item
-          </button>
+    <div className="flex flex-col bg-slate-400 h-[100vh]">
+      <div className="flex justify-center">
+        <form className="my-10">
+          <input value={newTask} onChange={(e)=>setNewTask(e.target.value)}></input>
+          <button onClick={handleAddTask}>AddTask</button>
         </form>
       </div>
-
-      <div className=" flex items-center justify-center">
+      <div className="flex">
         {stages.map((stage, stageIndex) => {
           return (
             <div
-              className="bg-slate-500 border-black border-2 margin-auto m-auto h-[70vh] w-[20vw] flex flex-col"
+              className="border-black border-2 h-[80vh] w-[20vw] m-auto flex flex-col items-center"
               key={stageIndex}
             >
-              <h1 className="inline-block mx-auto mt-2 text-lg border-b-2 border-black">
-                {stage}
-              </h1>
+              <h1>{stage}</h1>
 
-              <ul>
-                {taskStages[stageIndex].map((task, taskIndex) => {
-                  return (
-                    <li key={taskIndex}>
-                      <div className="flex justify-center gap-2 text-lg">
-                        <span>{task.name}</span>
-                        <span>
-                          <button
-                            onClick={() => moveTask(stageIndex, taskIndex, -1)}
-                          >
-                            ⬅️
-                          </button>
-                          <button
-                            onClick={() => moveTask(stageIndex, taskIndex, 1)}
-                          >
-                            ➡️
-                          </button>
-                          <button
-                            onClick={() => handleDelete(stageIndex, taskIndex)}
-                          >
-                            ❌
-                          </button>
-                        </span>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
+              {taskStages[stageIndex].map((task, taskIndex) => {
+                return (
+                  <li key={taskIndex}>
+                    <span>{task.name}</span>
+                    <span>
+                      <button>⬅️</button>
+                      <button>➡️</button>
+                      <button>❌</button>
+                    </span>
+                  </li>
+                );
+              })}
             </div>
           );
         })}
       </div>
     </div>
   );
-};
+}
 
 export default Demo;
