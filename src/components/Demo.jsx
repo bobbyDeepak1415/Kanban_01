@@ -8,11 +8,13 @@ const handleClick=()=>{
 
 }
 
-  return <div>
-    <p>{count}</p>
-    <button  onClick={handleClick}>+</button>
-    <button  onClick={handleClick}>-</button>
-  </div>;
+  return (
+    <div>
+      <p>{count}</p>
+      <button  onClick={handleClick}>+</button>
+      <button onClick={handleClick}>-</button>
+    </div>
+  );
 };
 
 export default Demo;
