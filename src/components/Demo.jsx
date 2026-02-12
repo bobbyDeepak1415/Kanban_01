@@ -4,8 +4,14 @@ const Demo = () => {
   
 const [count,setCount]=useState(0)
 
+const handleClick=()=>{
+
+}
+
   return <div>
-    Hello
+    <p>{count}</p>
+    <button  onClick={handleClick}>+</button>
+    <button  onClick={handleClick}>-</button>
   </div>;
 };
 
