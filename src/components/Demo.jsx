@@ -9,7 +9,8 @@ const Demo = () => {
         return count + 1;
       case "decrement":
         return count - 1;
-        default: return count
+      default:
+        return count;
     }
   };
 
@@ -25,7 +26,6 @@ const Demo = () => {
       <button
         onClick={() => handleClick(count, decrement)}
         className="p-2 bg-slate-500 m-2"
-        onClick={handleClick}
       >
         -
       </button>
