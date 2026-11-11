@@ -5,10 +5,12 @@ const initialState={
   value:200
 }
 
- const handleClick = (action) => {
+ const handleClick = (count,action) => {
     switch (action.type) {
       case "increment":
-        return count + 1;
+        return {
+          value:count.value+1
+        }
       case "decrement":
         return count - 1;
       default:
@@ -26,7 +28,7 @@ const Demo = () => {
       <p>{count.value}</p>
       <button
         className="p-2 bg-slate-400"
-        onClick={() => setCount({type:increment})}
+        onClick={() => setCount({type:"increment"})}
       >
         +
       </button>
