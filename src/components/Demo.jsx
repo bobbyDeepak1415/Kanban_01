@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 
-const Demo = () => {
-  const [count, setCount] = useState(0);
 
-  const handleClick = (count, action) => {
+const initialState={
+  value:200
+}
+
+ const handleClick = (action) => {
     switch (action.type) {
       case "increment":
         return count + 1;
@@ -14,9 +16,14 @@ const Demo = () => {
     }
   };
 
+
+const Demo = () => {
+  const [count, setCount] = useReducer(handleClick,initialState);
+
+ 
   return (
     <div>
-      <p>{count}</p>
+      <p>{count.value}</p>
       <button
         className="p-2 bg-slate-400"
         onClick={() => handleClick(count, increment)}
@@ -34,5 +41,3 @@ const Demo = () => {
 };
 
 export default Demo;
-
-
