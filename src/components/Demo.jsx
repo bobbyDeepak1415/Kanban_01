@@ -12,7 +12,10 @@ const initialState={
           value:count.value+1
         }
       case "decrement":
-        return count - 1;
+        return {
+
+          value:count.value - 1
+        }
       default:
         return count;
     }
@@ -27,13 +30,14 @@ const Demo = () => {
     <div>
       <p>{count.value}</p>
       <button
+        disabled={count.value===200}
         className="p-2 bg-slate-400"
         onClick={() => setCount({type:"increment"})}
       >
         +
       </button>
       <button
-        onClick={() =>setCount({type: decrement})}
+        onClick={() =>setCount({type: "decrement"})}
         className="p-2 bg-slate-500 m-2"
       >
         -
