@@ -26,12 +26,12 @@ const Demo = () => {
       <p>{count.value}</p>
       <button
         className="p-2 bg-slate-400"
-        onClick={() => handleClick(count, increment)}
+        onClick={() => setCount({type:increment})}
       >
         +
       </button>
       <button
-        onClick={() => handleClick(count, decrement)}
+        onClick={() =>setCount({type: decrement})}
         className="p-2 bg-slate-500 m-2"
       >
         -
